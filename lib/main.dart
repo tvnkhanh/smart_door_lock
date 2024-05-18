@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:smart_door_lock/pages/home_page.dart';
+import 'package:smart_door_lock/screens/home_screen.dart';
 
-void main() {
+void main() async {
   runApp(const MyApp());
 }
 

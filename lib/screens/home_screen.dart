@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:smart_door_lock/pages/history_page.dart';
+import 'package:smart_door_lock/screens/add_new_face_screen.dart';
+import 'package:smart_door_lock/screens/history_screen.dart';
+import 'package:smart_door_lock/screens/lock_screen.dart';
 import 'package:smart_door_lock/widget/card_menu.dart';
 
 class HomePage extends StatefulWidget {
@@ -76,6 +78,14 @@ class _HomePageState extends State<HomePage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         CardMenu(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const AddNewFacePage(),
+                              ),
+                            );
+                          },
                           icon: 'assets/images/face-scan.png',
                           title: 'ADD NEW FACE',
                           color: Colors.indigoAccent,
@@ -102,6 +112,14 @@ class _HomePageState extends State<HomePage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         CardMenu(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const LockPage(),
+                              ),
+                            );
+                          },
                           icon: 'assets/images/lock.png',
                           title: 'LOCK',
                           color: Colors.indigoAccent,
