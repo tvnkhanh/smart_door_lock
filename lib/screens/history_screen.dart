@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smart_door_lock/models/history.dart';
 import 'package:smart_door_lock/services/history_service.dart';
+import 'package:smart_door_lock/widget/date_range_time_picker.dart';
 import 'package:smart_door_lock/widget/history_item.dart';
 
 class HistoryPage extends StatefulWidget {
@@ -13,6 +14,7 @@ class HistoryPage extends StatefulWidget {
 class _HistoryPageState extends State<HistoryPage> {
   List<History>? histories;
   final HistoryService historyService = HistoryService();
+  DateTimeRange? selectedDateRange;
 
   @override
   void initState() {
@@ -25,8 +27,23 @@ class _HistoryPageState extends State<HistoryPage> {
     setState(() {});
   }
 
+  void onDateRangeChanged(DateTimeRange newDateRange) {
+    setState(() {
+      selectedDateRange = newDateRange;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    final start = selectedDateRange?.start ??
+        DateTime.now().subtract(const Duration(days: 30));
+    final end = selectedDateRange?.end ?? DateTime.now();
+
+    List<History> filteredHistories = histories?.where((history) {
+          return history.time.isAfter(start) && history.time.isBefore(end);
+        }).toList() ??
+        [];
+
     return Scaffold(
       backgroundColor: Colors.indigo.shade50,
       body: SingleChildScrollView(
@@ -62,12 +79,18 @@ class _HistoryPageState extends State<HistoryPage> {
                 const SizedBox(
                   height: 5,
                 ),
+                DateRangeTimePicker(
+                  onDateRangeChanged: onDateRangeChanged,
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
                 histories != null
                     ? ListView.builder(
-                        itemCount: histories!.length,
+                        itemCount: filteredHistories.length,
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
-                          return HistoryItem(history: histories![index]);
+                          return HistoryItem(history: filteredHistories[index]);
                         },
                       )
                     : const Center(
