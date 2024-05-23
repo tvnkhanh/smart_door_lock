@@ -46,49 +46,43 @@ class _HistoryPageState extends State<HistoryPage> {
 
     return Scaffold(
       backgroundColor: Colors.indigo.shade50,
-      body: SingleChildScrollView(
-        child: SafeArea(
-          child: Container(
-            margin: const EdgeInsets.only(top: 18, left: 24, right: 24),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Icon(
-                        Icons.arrow_back_ios,
-                        color: Colors.indigo,
-                      ),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 18, left: 24, right: 24),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Icon(
+                      Icons.arrow_back_ios,
+                      color: Colors.indigo,
                     ),
-                    const RotatedBox(
-                      quarterTurns: 135,
-                      child: Icon(
-                        Icons.bar_chart_rounded,
-                        color: Colors.indigo,
-                        size: 28,
-                      ),
-                    )
-                  ],
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                DateRangeTimePicker(
-                  onDateRangeChanged: onDateRangeChanged,
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                histories != null
+                  ),
+                  const RotatedBox(
+                    quarterTurns: 135,
+                    child: Icon(
+                      Icons.bar_chart_rounded,
+                      color: Colors.indigo,
+                      size: 28,
+                    ),
+                  )
+                ],
+              ),
+              const SizedBox(height: 5),
+              DateRangeTimePicker(
+                onDateRangeChanged: onDateRangeChanged,
+              ),
+              const SizedBox(height: 5),
+              Expanded(
+                child: histories != null
                     ? ListView.builder(
                         itemCount: filteredHistories.length,
-                        shrinkWrap: true,
                         itemBuilder: (context, index) {
                           return HistoryItem(history: filteredHistories[index]);
                         },
@@ -98,8 +92,8 @@ class _HistoryPageState extends State<HistoryPage> {
                           color: Colors.indigo,
                         ),
                       ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
